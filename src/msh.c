@@ -27,9 +27,9 @@
 void                       launch(char *);
 char                     *getLine(char *);
 void          parseLine(char *, char ***);
-void										 execute(char **);
-void													quit(int *); 
-void									 cd(char *, char *);     
+void                     execute(char **);
+void                          quit(int *); 
+void                   cd(char *, char *);     
 
 /*******************************************************
 *********************** main ***************************
