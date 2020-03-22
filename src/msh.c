@@ -37,10 +37,10 @@ void                   cd(char *, char *);
 
 int main(int argc, char **argv) {
 
-	char  cwd[DIR_BUFFER_SIZE] = DEFAULT_CWD;
-	char                 *line = NULL; 
-	char                **args = NULL;
-	int              isStopped = 0;
+  char  cwd[DIR_BUFFER_SIZE] = DEFAULT_CWD;
+  char                 *line = NULL; 
+  char                **args = NULL;
+  int              isStopped = 0;
 
 	launch(cwd);
 
