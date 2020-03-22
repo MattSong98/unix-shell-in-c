@@ -26,7 +26,7 @@
 
 void                       launch(char *);
 char                     *getLine(char *);
-void   parseLine(char *, char ***, int *);
+void          parseLine(char *, char ***);
 void										 execute(char **);
 void													quit(int *); 
 void									 cd(char *, char *);     
@@ -40,7 +40,6 @@ int main(int argc, char **argv) {
 	char  cwd[DIR_BUFFER_SIZE] = DEFAULT_CWD;
 	char                 *line = NULL; 
 	char                **args = NULL;
-	int                  count = 0;
 	int              isStopped = 0;
 
 	launch(cwd);
@@ -48,20 +47,19 @@ int main(int argc, char **argv) {
 	while (!isStopped) {
 
 		line = getLine(cwd);
-		parseLine(line, &args, &count);
-
-		if (count > 0) {
-			if (!strcmp(args[0], "quit")|| !strcmp(args[0], "exit")) {
+		parseLine(line, &args);
+		
+		if (args[0]) { 
+			if (!strcmp(args[0], "quit") || !strcmp(args[0], "exit")) {
 				quit(&isStopped);
 			} else if (!strcmp(args[0], "cd")) {
 				cd(args[1], cwd);
 			} else {
 				execute(args);
 			}
-		}
-		
-		for (int i = 0; i < count; i++) {
-			free(args[i]);
+			for (char *p = args[0]; !p; p++) {
+				free(p);
+			}
 		}
 		free(args); 		
 		free(line);
@@ -117,13 +115,13 @@ char *getLine(char *cwd) {
 }
 
 // parse the line and transform it into args & count
-void parseLine(char *line, char ***ptrToArgs, int *count) {
+void parseLine(char *line, char ***ptrToArgs) {
 	
-	char **args   = (char **)malloc(sizeof(char *) * MAX_ARG_NUM);
-	char *ptr     = line;
-	char *arg     = NULL;
-	*ptrToArgs    = args;
-	*count        = 0;
+	char **args   =  (char **)malloc(sizeof(char *) * MAX_ARG_NUM);
+	char   *ptr   =  line;
+	char   *arg   =  NULL;
+	int   count   =  0;
+	*ptrToArgs    =  args;
 
 	if (!args) {
 		perror("msh");
@@ -131,34 +129,32 @@ void parseLine(char *line, char ***ptrToArgs, int *count) {
 	}
 
 	while (1) {
-
+		
 		if (*ptr == '\0') {
-			if (*count != 0) 
+			if (count != 0) 
 				*arg = '\0';
-			args[*count] = NULL;
+			args[count] = NULL;
 			return;
 		}
 
 		if (*ptr == ' ') {
-			ptr++; 
+			ptr++;
 			continue;
 		}
 
-		if (*count == 0 && *ptr != ' ') {
+		if (count == 0 && *ptr != ' ') {
 			arg = (char *)malloc(sizeof(char) * ARG_BUFFER_SIZE);
 			if (!arg) {
 				perror("msh");
 				exit(EXIT_FAILURE);
 			}
-			args[(*count)++] = arg; 
-			*(arg++) = *ptr;
-			ptr++;
+			args[count++] = arg; 
+			*(arg++) = *(ptr++);
 			continue;
 		}
 	
 		if (*ptr != ' ' && *(ptr-1) != ' ') {
-			*(arg++) = *ptr;
-			ptr++;
+			*(arg++) = *(ptr++);
 			continue;
 		}
 	
@@ -169,9 +165,8 @@ void parseLine(char *line, char ***ptrToArgs, int *count) {
 				perror("msh");
 				exit(EXIT_FAILURE);
 			}
-			args[(*count)++] = arg;
-			*(arg++) = *ptr;
-			ptr++;
+			args[count++] = arg;
+			*(arg++) = *(ptr++);
 			continue;
 		} 
 	}		
