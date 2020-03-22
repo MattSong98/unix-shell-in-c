@@ -1,0 +1,10 @@
+MYSQL_HOME  /usr/local/bin
+PATH  /usr/local/mysql/bin
+
+MAVEN_HOME  /usr/local/maven
+PATH  /usr/local/maven/bin
+
+CATALINA_HOME /usr/local/tomcat
+
+MSH_HOME  ~/desktop/org.mattsong/unix-shell-in-c
+PATH  ~/desktop/org.mattsong/unix-shell-in-c/bin
