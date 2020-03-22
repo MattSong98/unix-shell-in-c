@@ -4,7 +4,7 @@
 ** @Auther: Matt Song
 ** @Version: 1.0.0
 ** @Date: 2020-3-21
-** @Description: A shell run on Unix shell to provide basic operations 
+** @Description: A shell that provides basic operations 
 *************************************************
 ************************************************/
 
