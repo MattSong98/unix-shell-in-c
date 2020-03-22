@@ -4,7 +4,7 @@
 ** @Auther: Matt Song
 ** @Version: 1.0.0
 ** @Date: 2020-3-21
-** @Description: A shell run on Unix shell to provide basic operations 
+** @Description: A shell that provides basic operations 
 *************************************************
 ************************************************/
 
@@ -114,7 +114,7 @@ char *getLine(char *cwd) {
   }
 }
 
-// parse the line and transform it into args & count
+// parse the line and transform it into args
 void parseLine(char *line, char ***ptrToArgs) {
   
   char **args   =  (char **)malloc(sizeof(char *) * MAX_ARG_NUM);
