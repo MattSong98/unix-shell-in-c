@@ -93,7 +93,7 @@ char *getLine(char *cwd) {
 		exit(EXIT_FAILURE);
 	}
 
-	printf("<%s> ", cwd);
+	printf("%s[M] ", cwd);
 
 	while (1) {
 		int c = getchar();				
